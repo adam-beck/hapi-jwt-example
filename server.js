@@ -17,11 +17,7 @@ function validate(decoded, request, callback) {
   // if the user has a valid JWT then he/she has already been sucessfully authenticated
   // so there isn't much reason for any further validation
   // this validate function just checks that the user has a valid JWT and passes it on
-  if (decoded) {
-    return callback(null, true);
-  }
-
-  return callback(null, false);
+  return callback(null, !!decoded);
 }
 
 server.register(require('hapi-auth-jwt2'), err => {
