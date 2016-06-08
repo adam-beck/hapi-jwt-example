@@ -6,7 +6,6 @@ const mongoose = require('mongoose');
 const glob = require('glob');
 const path = require('path');
 const secret = require('./config');
-// const jwt = require('jsonwebtoken');
 
 const server = new Hapi.Server();
 
@@ -15,10 +14,11 @@ server.connection({ port: 3000 });
 const dbUrl = 'mongodb://localhost:3001/hapi-app';
 
 function validate(decoded, request, callback) {
-  console.log('in validate function');
-  console.log(decoded);
+  // if the user has a valid JWT then he/she has already been sucessfully authenticated
+  // so there isn't much reason for any further validation
+  // this validate function just checks that the user has a valid JWT and passes it on
   if (decoded) {
-    return callback(null, true, decoded);
+    return callback(null, true);
   }
 
   return callback(null, false);
@@ -51,6 +51,6 @@ server.start(err => {
       throw err;
     }
 
-    console.log('all up and ready');
+    console.log(`Server up and running at: ${server.info.uri}`);
   });
 });
