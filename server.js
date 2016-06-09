@@ -11,7 +11,7 @@ const server = new Hapi.Server();
 
 server.connection({ port: 3000 });
 
-const dbUrl = 'mongodb://localhost:3001/hapi-app';
+const dbUrl = 'mongodb://db:27017/hapi-app';
 
 function validate(decoded, request, callback) {
   // if the user has a valid JWT then he/she has already been sucessfully authenticated
