@@ -31,3 +31,14 @@ more active development -- [hapi-auth--jwt2](https://github.com/dwyl/hapi-auth-j
     - "email": STRING
     - "username": STRING
     - "password": STRING
+  - Returns a JWT
+- **POST** /api/users/authenticate
+  - Use route to authenticate credentials of already created user account
+  - Takes a JSON Object with the form:
+    - "email" OR "username": STRING
+    - "password" STRING
+  - Returns a JWT
+- **GET** /api/users
+  - Use route to get list of all users in system
+  - Request must send a JWT with an "admin" scope in the Authorization header
+    - Example => Authorization: Bearer [JWT STRING]
