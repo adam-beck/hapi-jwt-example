@@ -13,11 +13,11 @@ module.exports = {
     pre: [
       { method: verifyCredentials, assign: 'user' }
     ],
-    handler: (request, reply) => {
-      reply({ id_token: createToken(req.pre.user) }).code(201)
-    },
     validate: {
       payload: authenticateUserSchema
     }
+  },
+  handler: (request, reply) => {
+    reply({ id_token: createToken(req.pre.user) }).code(201)
   }
 };

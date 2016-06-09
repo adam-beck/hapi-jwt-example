@@ -3,53 +3,53 @@
 const Boom = require('boom');
 const User = require('../model/User');
 
-function verifyUniqueUser(req, res) {
+function verifyUniqueUser(request, reply) {
 
   User.findOne({
     $or: [
-      { email: req.payload.email },
-      { username: req.payload.username }
+      { email: request.payload.email },
+      { username: request.payload.username }
     ]
   }, (err, user) => {
 
     if (user) {
-      if (user.username === req.payload.username) {
-        return res(Boom.badRequest('Username taken'));
+      if (user.username === request.payload.username) {
+        return reply(Boom.badRequest('Username taken'));
       }
 
-      if (user.email === req.payload.email) {
-        return res(Boom.badRequest('Email taken'));
+      if (user.email === request.payload.email) {
+        return reply(Boom.badRequest('Email taken'));
       }
     }
 
     // if everything checks out, send the payload through
     // to the route handler
-    return res(req.payload);
+    return reply(request.payload);
   });
 }
 
-function verifyCredentials(req, res) {
+function verifyCredentials(request, reply) {
 
-  const password = req.payload.password;
+  const password = request.payload.password;
 
   User.findOne({
     $or: [
-      { email: req.payload.email },
-      { username: req.payload.username }
+      { email: request.payload.email },
+      { username: request.payload.username }
     ]
   }, (err, user) => {
 
     if (user) {
       bcrypt.compare(password, user.password, (err, isValid) => {
         if (isValid) {
-          return res(user);
+          return reply(user);
         }
 
-        return res(Boom.badRequest('Incorrect password!'));
+        return reply(Boom.badRequest('Incorrect password!'));
       });
     }
 
-    return res(Boom.badRequest('Incorrect username or email'));
+    return reply(Boom.badRequest('Incorrect username or email'));
 
   });
 }

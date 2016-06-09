@@ -7,7 +7,14 @@ module.exports = {
   method: 'GET',
   path: '/api/users',
   config: {
-    handler: (request, reply) => {
+    auth: {
+      strategy: 'jwt',
+      access: {
+        scope: ['admin']
+      }
+    }
+  },
+  handler: (request, reply) => {
       User
         .find()
         .select('-password -__v')
@@ -22,10 +29,5 @@ module.exports = {
 
           reply(users);
         });
-    },
-    auth: {
-      strategy: 'jwt',
-      scope: ['admin']
-    }
   }
 };
