@@ -9,7 +9,7 @@ const secret = require('./config');
 
 const server = new Hapi.Server();
 
-server.connection({ port: 3000 });
+server.connection({ port: 80 });
 
 const dbUrl = 'mongodb://db:27017/hapi-app';
 
